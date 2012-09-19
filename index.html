@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost');
+    socket.on('news', function (data) {
+      $('#value').html(data['light']);
+      width = (data['light'] / 1024) * 20744;
+      height = (data['light'] / 1024) * 7732;
+      //$('#xkcd').attr('width', width);
+      //$('#xkcd').attr('height', height);
+      $('#xkcd').css({
+        'left': -(data['light'] / 512) * 20744
+      });
+    });
+  </script>
+
+  <style type="text/css">
+    body {
+      font-family: Helvetica;
+    }
+    #content {
+      width: 20744px;
+      height: 7732px;
+      position: absolute;
+    }
+    #xkcd{
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+    #value {
+      color: gray;
+      font-size: 48px;
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id=content>
+    <img id=xkcd src="http://www.stilldavid.com/xkcd.png" width=20744 height=7732>
+  </div>
+  <div id=value>
+  </div>
+
+</body>
+<html>
